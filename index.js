@@ -8,12 +8,19 @@ import campaignRoutes from './routes/campaignRoutes.js';
 import communicationLogRoutes from './routes/communicationLogRoutes.js';
 import deliveryReceiptRoutes from './routes/deliveryReceiptRoutes.js';
 import userRoutes from './routes/userRoutes.js';
-import aiRoutes from './routes/aiRoutes.js';
+// import aiRoutes from './routes/aiRoutes.js';
 import { protect } from './middleware/authMiddleware.js';
-import config from  'dotenv/config';
+import dotenv from  'dotenv';
 
 
-config(); // Load environment variables
+dotenv.config(); 
+
+console.log('Environment Variables:', {
+    MONGO_URI: process.env.MONGO_URI,
+    PORT: process.env.PORT,
+    NODE_ENV: process.env.NODE_ENV,
+    JWT_SECRET: process.env.JWT_SECRET
+});
 
 const app = express();
 connectDB();
@@ -30,7 +37,7 @@ app.use(express.json());
 
 // Public routes
 app.use('/users', userRoutes); // login/signup/google-login should be public
-app.use('/ai', aiRoutes);      // if you want AI routes public, keep here
+// app.use('/ai', aiRoutes);      // if you want AI routes public, keep here
 
 // Protect all routes below this middleware
 app.use(protect);
